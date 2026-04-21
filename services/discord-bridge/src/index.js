@@ -1,8 +1,10 @@
 import { parseWebhooksFromEnv, createSender } from "./discord.js";
 import { findContainer, tailLogs } from "./docker.js";
-import { matchEvent } from "./events.js";
+import { matchEvent, createState } from "./events.js";
+import { DEFAULT_CONTAINER_PATTERN } from "./utils/constants.js";
 
-const CONTAINER_PATTERN = process.env.MC_CONTAINER_PATTERN || "^mc-";
+const CONTAINER_PATTERN =
+  process.env.MC_CONTAINER_PATTERN || DEFAULT_CONTAINER_PATTERN;
 
 const webhooks = parseWebhooksFromEnv(process.env);
 if (Object.keys(webhooks).length === 0) {
@@ -19,17 +21,36 @@ const send = createSender({
   botAvatar: process.env.BOT_AVATAR,
 });
 
+const state = createState();
+
+/**
+ * @param {number} ms
+ * @returns {Promise<void>}
+ */
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/**
+ * Run every log line through the event catalog and dispatch matches.
+ * @param {string} line
+ */
 function processLine(line) {
   const result = matchEvent(line);
   if (!result) return;
   console.log(`→ ${result.event.name}: ${line.trim()}`);
-  send(result.event.channel, result.event.build(result.match)).catch((err) =>
+  send(
+    result.event.channel,
+    result.event.build(result.match, state),
+  ).catch((err) =>
     console.error(`Send failed for ${result.event.name}:`, err.message),
   );
 }
 
+/**
+ * Main loop: locate the Minecraft container, tail its logs, restart on
+ * disconnect. Never resolves — runs until the process is killed.
+ *
+ * @returns {Promise<void>}
+ */
 async function main() {
   console.log(`Discord bridge starting — watching /${CONTAINER_PATTERN}/`);
 
@@ -46,7 +67,8 @@ async function main() {
       console.log("Log stream ended, reconnecting in 5s...");
       await sleep(5000);
     } catch (err) {
-      console.error("Loop error:", err.message);
+      const message = err instanceof Error ? err.message : String(err);
+      console.error("Loop error:", message);
       await sleep(5000);
     }
   }

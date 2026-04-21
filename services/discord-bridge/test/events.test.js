@@ -1,6 +1,11 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { matchEvent, EVENTS } from "../src/events.js";
+import {
+  matchEvent,
+  EVENTS,
+  createState,
+  formatDuration,
+} from "../src/events.js";
 
 describe("matchEvent — pattern matching", () => {
   it("matches a player join line", () => {
@@ -37,6 +42,70 @@ describe("matchEvent — pattern matching", () => {
   });
 });
 
+describe("matchEvent — player death", () => {
+  const deathCases = [
+    ["PlayerX was slain by Zombie", "was slain by Zombie"],
+    ["PlayerX was shot by Skeleton", "was shot by Skeleton"],
+    ["PlayerX was blown up by Creeper", "was blown up by Creeper"],
+    ["PlayerX was killed by Warden using [Claws]", "was killed by Warden using [Claws]"],
+    ["PlayerX drowned", "drowned"],
+    ["PlayerX died", "died"],
+    ["PlayerX died from Warden sonic boom", "died from Warden sonic boom"],
+    ["PlayerX fell from a high place", "fell from a high place"],
+    ["PlayerX fell out of the world", "fell out of the world"],
+    ["PlayerX hit the ground too hard whilst trying to escape Zombie", "hit the ground too hard whilst trying to escape Zombie"],
+    ["PlayerX tried to swim in lava", "tried to swim in lava"],
+    ["PlayerX burned to death", "burned to death"],
+    ["PlayerX went up in flames", "went up in flames"],
+    ["PlayerX starved to death", "starved to death"],
+    ["PlayerX withered away", "withered away"],
+    ["PlayerX froze to death", "froze to death"],
+    ["PlayerX suffocated in a wall", "suffocated in a wall"],
+    ["PlayerX walked into a cactus whilst trying to escape Skeleton", "walked into a cactus whilst trying to escape Skeleton"],
+    ["PlayerX didn't want to live in the same world as PlayerY", "didn't want to live in the same world as PlayerY"],
+    ["PlayerX got finished off by Zombie using [Iron Sword]", "got finished off by Zombie using [Iron Sword]"],
+  ];
+
+  for (const [msg, expectedCause] of deathCases) {
+    it(`matches: ${msg}`, () => {
+      const line = `[15:00:00] [Server thread/INFO]: ${msg}`;
+      const result = matchEvent(line);
+      assert.ok(result, "expected match");
+      assert.equal(result.event.name, "player-death");
+      assert.equal(result.match[2], expectedCause);
+    });
+  }
+
+  it("does not trigger on join/leave lines (those match first)", () => {
+    const join = matchEvent(
+      "[15:00:00] [Server thread/INFO]: PlayerX joined the game",
+    );
+    const leave = matchEvent(
+      "[15:00:00] [Server thread/INFO]: PlayerX left the game",
+    );
+    assert.equal(join.event.name, "player-join");
+    assert.equal(leave.event.name, "player-leave");
+  });
+
+  it("does not trigger on chat messages", () => {
+    // Chat uses <PlayerX> format, not bare PlayerX
+    const chat = matchEvent(
+      "[15:00:00] [Server thread/INFO]: <PlayerX> was wondering about the cave",
+    );
+    assert.equal(chat, null);
+  });
+});
+
+describe("player-death builder", () => {
+  it("builds a red embed with the death cause", () => {
+    const event = EVENTS.find((e) => e.name === "player-death");
+    const payload = event.build(["full", "PlayerX", "was slain by Zombie"]);
+    assert.equal(payload.embeds[0].color, 0xef4444);
+    assert.match(payload.embeds[0].description, /PlayerX/);
+    assert.match(payload.embeds[0].description, /was slain by Zombie/);
+  });
+});
+
 describe("event definitions", () => {
   it("every event has the required shape", () => {
     for (const event of EVENTS) {
@@ -62,7 +131,7 @@ describe("event definitions", () => {
 describe("event builders", () => {
   it("player-join builds a green embed with the player name", () => {
     const event = EVENTS.find((e) => e.name === "player-join");
-    const payload = event.build(["full", "TestPlayer"]);
+    const payload = event.build(["full", "TestPlayer"], createState());
 
     assert.equal(payload.embeds[0].color, 0x22c55e);
     assert.match(payload.embeds[0].description, /TestPlayer/);
@@ -71,10 +140,98 @@ describe("event builders", () => {
 
   it("player-leave builds a gray embed with the player name", () => {
     const event = EVENTS.find((e) => e.name === "player-leave");
-    const payload = event.build(["full", "TestPlayer"]);
+    const payload = event.build(["full", "TestPlayer"], createState());
 
     assert.equal(payload.embeds[0].color, 0x6b7280);
     assert.match(payload.embeds[0].description, /TestPlayer/);
     assert.match(payload.embeds[0].description, /déconnecté/);
+  });
+});
+
+describe("session duration tracking", () => {
+  it("player-join records a join timestamp in state", () => {
+    const state = createState();
+    const join = EVENTS.find((e) => e.name === "player-join");
+    const before = Date.now();
+
+    join.build(["full", "TestPlayer"], state);
+
+    const recorded = state.get("join:TestPlayer");
+    assert.ok(typeof recorded === "number", "should record a timestamp");
+    assert.ok(recorded >= before && recorded <= Date.now() + 1);
+  });
+
+  it("player-leave clears the join timestamp from state", () => {
+    const state = createState();
+    state.set("join:TestPlayer", Date.now());
+    const leave = EVENTS.find((e) => e.name === "player-leave");
+
+    leave.build(["full", "TestPlayer"], state);
+
+    assert.equal(state.has("join:TestPlayer"), false);
+  });
+
+  it("player-leave includes session duration when join was recorded", () => {
+    const state = createState();
+    // 5 minutes ago
+    state.set("join:TestPlayer", Date.now() - 5 * 60 * 1000);
+    const leave = EVENTS.find((e) => e.name === "player-leave");
+
+    const payload = leave.build(["full", "TestPlayer"], state);
+
+    assert.match(payload.embeds[0].description, /après 5m/);
+  });
+
+  it("player-leave omits duration when no join was recorded", () => {
+    const state = createState();
+    const leave = EVENTS.find((e) => e.name === "player-leave");
+
+    const payload = leave.build(["full", "TestPlayer"], state);
+
+    assert.doesNotMatch(payload.embeds[0].description, /après/);
+    assert.match(payload.embeds[0].description, /s'est déconnecté$/);
+  });
+
+  it("join state is isolated per player", () => {
+    const state = createState();
+    const join = EVENTS.find((e) => e.name === "player-join");
+    const leave = EVENTS.find((e) => e.name === "player-leave");
+
+    state.set("join:Alice", Date.now() - 10 * 60 * 1000); // Alice joined 10min ago
+    join.build(["full", "Bob"], state); // Bob joins now
+
+    const aliceLeave = leave.build(["full", "Alice"], state);
+    const bobLeave = leave.build(["full", "Bob"], state);
+
+    assert.match(aliceLeave.embeds[0].description, /après 10m/);
+    assert.match(bobLeave.embeds[0].description, /après 0s/);
+  });
+});
+
+describe("formatDuration", () => {
+  it("formats seconds under a minute", () => {
+    assert.equal(formatDuration(0), "0s");
+    assert.equal(formatDuration(5_000), "5s");
+    assert.equal(formatDuration(59_999), "59s");
+  });
+
+  it("formats minutes without leading zero seconds", () => {
+    assert.equal(formatDuration(60_000), "1m");
+    assert.equal(formatDuration(2 * 60_000), "2m");
+  });
+
+  it("formats minutes + seconds", () => {
+    assert.equal(formatDuration(60_000 + 30_000), "1m 30s");
+    assert.equal(formatDuration(59 * 60_000 + 59_000), "59m 59s");
+  });
+
+  it("formats hours", () => {
+    assert.equal(formatDuration(60 * 60_000), "1h");
+    assert.equal(formatDuration(2 * 60 * 60_000), "2h");
+  });
+
+  it("formats hours + minutes", () => {
+    assert.equal(formatDuration(60 * 60_000 + 30 * 60_000), "1h 30m");
+    assert.equal(formatDuration(10 * 60 * 60_000 + 5 * 60_000), "10h 5m");
   });
 });
