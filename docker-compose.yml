@@ -30,6 +30,7 @@ services:
       ENABLE_COMMAND_BLOCK: ${MINECRAFT_ENABLE_COMMAND_BLOCK:-false}
       ONLINE_MODE: ${MINECRAFT_ONLINE_MODE:-true}
       SNOOPER_ENABLED: ${MINECRAFT_SNOOPER_ENABLED:-false}
+      OPS: ${OPS:-}
 
       # --- World / network tuning (small-VPS defaults) ---
       MAX_WORLD_SIZE: ${MINECRAFT_MAX_WORLD_SIZE:-10000}

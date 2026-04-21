@@ -10,10 +10,11 @@
 #   ./scripts/remote-shell.sh --host uptime          # run a single command on remote host
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
-ENV_FILE="$SCRIPT_DIR/.env"
+PROJECT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
+ENV_FILE="$PROJECT_DIR/.env"
 
 if [ -f "$ENV_FILE" ]; then
-  . "$ENV_FILE"
+  REMOTE=$(grep -E '^REMOTE=' "$ENV_FILE" | head -1 | cut -d= -f2-)
 fi
 
 if [ -z "$REMOTE" ]; then
