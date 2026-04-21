@@ -54,8 +54,12 @@ services:
       USE_MEOWICE_FLAGS: "true"
       GUI: "false"
 
-      # --- Mods: auto-install performance stack from Modrinth + local ./mods ---
-      MODRINTH_PROJECTS: ${MODRINTH_PROJECTS:-lithium,ferrite-core,krypton,spark,alternate-current}
+      # --- Mods: auto-install from Modrinth + local ./mods/ ---
+      # Perf: lithium, ferrite-core, krypton, spark, c2me-fabric, noisium
+      # Redstone: alternate-current
+      # QoL: chunky, ping-wheel, fallingtree, ledger, fastback, waystones,
+      #      better-serversleep, universal-graves
+      MODRINTH_PROJECTS: "lithium,ferrite-core,krypton,spark,c2me-fabric,noisium,alternate-current,chunky,ping-wheel,fallingtree,ledger,fastback,waystones,better-serversleep,universal-graves"
       MODRINTH_DOWNLOAD_DEPENDENCIES: required
       REMOVE_OLD_MODS: "true"
 
