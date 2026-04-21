@@ -1,3 +1,4 @@
 .env
 minecraft-data/
 dumps/
+node_modules/
