@@ -12,7 +12,7 @@ services:
 
       # --- Server identity ---
       SERVER_NAME: ${MINECRAFT_SERVER_NAME:-Culture Craft}
-      MOTD: ${MINECRAFT_MOTD:-§aCulture Craft§r}
+      MOTD: ${MINECRAFT_MOTD:-§a§lCulture Craft§r\n§7Fabric 1.21.11 · Entre amis}
       ICON: https://raw.githubusercontent.com/atinseau/culture-craft/master/logo.png
       OVERRIDE_ICON: "true"
 
