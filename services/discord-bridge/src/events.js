@@ -3,6 +3,11 @@ import { formatDuration } from "./utils/duration.js";
 import { DEATH_REGEX } from "./utils/death-patterns.js";
 import { sessionKey } from "./utils/state.js";
 
+// State key used to track a graceful MC shutdown. Set by the server-stopping
+// event, cleared by server-ready. The main loop reads it after `tailLogs`
+// resolves to distinguish a clean stop from a crash.
+const GRACEFUL_STOP_KEY = "lifecycle:graceful-stop-pending";
+
 // Re-export state helpers so callers only need to import from "./events.js".
 export { createState, sessionKey } from "./utils/state.js";
 // Re-export duration too — useful for tests and downstream events.
@@ -47,27 +52,36 @@ export const EVENTS = [
     name: "server-ready",
     pattern: /\[Server thread\/INFO\]: Done \((\d+\.\d+)s\)!/,
     channel: CHANNELS.PLAYERS,
-    build: ([, bootTime]) => ({
-      embeds: [
-        {
-          color: COLORS.SERVER_UP,
-          description: `🟩 **Serveur en ligne** (boot ${bootTime}s)`,
-        },
-      ],
-    }),
+    build: ([, bootTime], state) => {
+      // New boot — clear any stale graceful-stop flag from the previous run.
+      state.delete(GRACEFUL_STOP_KEY);
+      return {
+        embeds: [
+          {
+            color: COLORS.SERVER_UP,
+            description: `🟩 **Serveur en ligne** (boot ${bootTime}s)`,
+          },
+        ],
+      };
+    },
   },
   {
     name: "server-stopping",
     pattern: /\[Server thread\/INFO\]: Stopping server/,
     channel: CHANNELS.PLAYERS,
-    build: () => ({
-      embeds: [
-        {
-          color: COLORS.SERVER_DOWN,
-          description: `🟥 **Serveur hors ligne**`,
-        },
-      ],
-    }),
+    build: (_, state) => {
+      // Mark the shutdown as graceful so the main loop won't post a crash
+      // notification when the log stream ends moments later.
+      state.set(GRACEFUL_STOP_KEY, true);
+      return {
+        embeds: [
+          {
+            color: COLORS.SERVER_DOWN,
+            description: `🟥 **Serveur hors ligne**`,
+          },
+        ],
+      };
+    },
   },
   {
     name: "player-join",
@@ -135,4 +149,60 @@ export function matchEvent(line) {
     if (match) return { event, match };
   }
   return null;
+}
+
+/**
+ * Synthetic event emitted by the main loop when the log stream ends. If the
+ * last thing we saw was a graceful `server-stopping` log, this returns null
+ * (the server-stopping event already notified). Otherwise the container
+ * died unexpectedly (SIGKILL / OOM / crash) and we post a warning.
+ *
+ * Consumes the flag so a subsequent reconnect + graceful stop works cleanly.
+ *
+ * @param {SharedState} state
+ * @returns {{ channel: string, payload: import('./discord.js').WebhookPayload } | null}
+ */
+export function buildCrashEvent(state) {
+  const wasGraceful = state.get(GRACEFUL_STOP_KEY) === true;
+  state.delete(GRACEFUL_STOP_KEY);
+  if (wasGraceful) return null;
+  return {
+    channel: CHANNELS.PLAYERS,
+    payload: {
+      embeds: [
+        {
+          color: COLORS.SERVER_DOWN,
+          description: `⚠️ **Serveur hors ligne** (arrêt non gracieux)`,
+        },
+      ],
+    },
+  };
+}
+
+/**
+ * Synthetic event emitted right after the bridge attaches to a container.
+ * If the MC container is already fully booted (`healthy` status), the
+ * bridge missed the historical `Done (...)!` log — we post a "bridge
+ * reconnected" message so users aren't left in the dark.
+ *
+ * If the container is still starting, we return null: the regular
+ * server-ready event will fire once boot completes.
+ *
+ * @param {{ State?: { Health?: { Status?: string } } } | null | undefined} inspectData
+ * @returns {{ channel: string, payload: import('./discord.js').WebhookPayload } | null}
+ */
+export function buildAttachEvent(inspectData) {
+  const healthStatus = inspectData?.State?.Health?.Status;
+  if (healthStatus !== "healthy") return null;
+  return {
+    channel: CHANNELS.PLAYERS,
+    payload: {
+      embeds: [
+        {
+          color: COLORS.SERVER_UP,
+          description: `🔌 Bridge rattaché — **Serveur en ligne**`,
+        },
+      ],
+    },
+  };
 }

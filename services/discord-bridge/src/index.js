@@ -1,6 +1,11 @@
 import { parseWebhooksFromEnv, createSender } from "./discord.js";
 import { findContainer, tailLogs } from "./docker.js";
-import { matchEvent, createState } from "./events.js";
+import {
+  matchEvent,
+  createState,
+  buildCrashEvent,
+  buildAttachEvent,
+} from "./events.js";
 import { createHealthState, createHealthServer } from "./health.js";
 import { DEFAULT_CONTAINER_PATTERN } from "./utils/constants.js";
 
@@ -74,8 +79,34 @@ async function main() {
       health.status = "attached";
       health.containerId = container.id;
       console.log(`Attached to container ${container.id.slice(0, 12)}`);
+
+      // Cold-start case: the bridge just attached to an already-healthy MC
+      // container and will never see the historical "Done (...)!" log.
+      // Surface the current status so the Discord channel isn't silent.
+      try {
+        const inspectData = await container.inspect();
+        const attachEvent = buildAttachEvent(inspectData);
+        if (attachEvent) {
+          await send(attachEvent.channel, attachEvent.payload);
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        console.error("Attach status check failed:", message);
+      }
+
       await tailLogs(container, processLine);
       health.status = "disconnected";
+
+      // Stream ended — distinguish a graceful stop (server-stopping already
+      // posted "🟥 hors ligne") from a crash (nothing posted, channel goes
+      // silent) and notify in the crash case.
+      const crashEvent = buildCrashEvent(state);
+      if (crashEvent) {
+        send(crashEvent.channel, crashEvent.payload).catch((err) =>
+          console.error("Crash notification failed:", err.message),
+        );
+      }
+
       console.log("Log stream ended, reconnecting in 5s...");
       await sleep(5000);
     } catch (err) {

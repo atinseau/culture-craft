@@ -5,6 +5,8 @@ import {
   EVENTS,
   createState,
   formatDuration,
+  buildCrashEvent,
+  buildAttachEvent,
 } from "../src/events.js";
 
 describe("matchEvent — server lifecycle", () => {
@@ -37,6 +39,81 @@ describe("matchEvent — server lifecycle", () => {
     const payload = event.build([], createState());
     assert.equal(payload.embeds[0].color, 0xdc2626);
     assert.match(payload.embeds[0].description, /hors ligne/);
+  });
+
+  it("server-stopping sets the graceful-stop flag in state", () => {
+    const state = createState();
+    const event = EVENTS.find((e) => e.name === "server-stopping");
+    event.build([], state);
+    // buildCrashEvent should now observe the flag
+    assert.equal(buildCrashEvent(state), null);
+  });
+
+  it("server-ready clears any stale graceful-stop flag", () => {
+    const state = createState();
+    state.set("lifecycle:graceful-stop-pending", true);
+    const event = EVENTS.find((e) => e.name === "server-ready");
+    event.build(["full", "1.000"], state);
+    // Flag was cleared → the next stream-end should be treated as a crash
+    assert.notEqual(buildCrashEvent(state), null);
+  });
+});
+
+describe("buildCrashEvent", () => {
+  it("returns null when the last stop was graceful", () => {
+    const state = createState();
+    state.set("lifecycle:graceful-stop-pending", true);
+    assert.equal(buildCrashEvent(state), null);
+  });
+
+  it("returns a crash payload when no graceful stop was seen", () => {
+    const state = createState();
+    const event = buildCrashEvent(state);
+    assert.ok(event);
+    assert.equal(event.channel, "players");
+    assert.match(event.payload.embeds[0].description, /non gracieux/);
+    assert.equal(event.payload.embeds[0].color, 0xdc2626);
+  });
+
+  it("consumes the flag (next call returns a crash payload)", () => {
+    const state = createState();
+    state.set("lifecycle:graceful-stop-pending", true);
+    assert.equal(buildCrashEvent(state), null); // first: graceful
+    assert.notEqual(buildCrashEvent(state), null); // second: flag consumed → crash
+  });
+});
+
+describe("buildAttachEvent", () => {
+  it("returns an attach payload when container is healthy", () => {
+    const event = buildAttachEvent({
+      State: { Health: { Status: "healthy" } },
+    });
+    assert.ok(event);
+    assert.equal(event.channel, "players");
+    assert.match(event.payload.embeds[0].description, /Bridge rattaché/);
+    assert.match(event.payload.embeds[0].description, /Serveur en ligne/);
+  });
+
+  it("returns null when container is still starting", () => {
+    const event = buildAttachEvent({
+      State: { Health: { Status: "starting" } },
+    });
+    assert.equal(event, null);
+  });
+
+  it("returns null when health data is missing", () => {
+    assert.equal(buildAttachEvent({}), null);
+    assert.equal(buildAttachEvent({ State: {} }), null);
+    assert.equal(buildAttachEvent({ State: { Health: {} } }), null);
+    assert.equal(buildAttachEvent(null), null);
+    assert.equal(buildAttachEvent(undefined), null);
+  });
+
+  it("returns null when container is unhealthy", () => {
+    const event = buildAttachEvent({
+      State: { Health: { Status: "unhealthy" } },
+    });
+    assert.equal(event, null);
   });
 });
 
