@@ -13,6 +13,8 @@ export const COLORS = Object.freeze({
   JOIN: 0x22c55e, // green-500
   LEAVE: 0x6b7280, // gray-500
   DEATH: 0xef4444, // red-500
+  SERVER_UP: 0x10b981, // emerald-500
+  SERVER_DOWN: 0xdc2626, // red-600
   INFO: 0x3b82f6, // blue-500
   WARN: 0xf59e0b, // amber-500
 });

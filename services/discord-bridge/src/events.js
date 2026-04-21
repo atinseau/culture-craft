@@ -44,6 +44,32 @@ export { formatDuration } from "./utils/duration.js";
  */
 export const EVENTS = [
   {
+    name: "server-ready",
+    pattern: /\[Server thread\/INFO\]: Done \((\d+\.\d+)s\)!/,
+    channel: CHANNELS.PLAYERS,
+    build: ([, bootTime]) => ({
+      embeds: [
+        {
+          color: COLORS.SERVER_UP,
+          description: `🟩 **Serveur en ligne** (boot ${bootTime}s)`,
+        },
+      ],
+    }),
+  },
+  {
+    name: "server-stopping",
+    pattern: /\[Server thread\/INFO\]: Stopping server/,
+    channel: CHANNELS.PLAYERS,
+    build: () => ({
+      embeds: [
+        {
+          color: COLORS.SERVER_DOWN,
+          description: `🟥 **Serveur hors ligne**`,
+        },
+      ],
+    }),
+  },
+  {
     name: "player-join",
     pattern: /\[Server thread\/INFO\]: (\w+) joined the game/,
     channel: CHANNELS.PLAYERS,

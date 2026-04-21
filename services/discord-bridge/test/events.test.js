@@ -7,6 +7,39 @@ import {
   formatDuration,
 } from "../src/events.js";
 
+describe("matchEvent — server lifecycle", () => {
+  it("matches server ready (Done) line and captures boot time", () => {
+    const line =
+      "[15:52:33] [Server thread/INFO]: Done (0.628s)! For help, type \"help\"";
+    const result = matchEvent(line);
+    assert.ok(result);
+    assert.equal(result.event.name, "server-ready");
+    assert.equal(result.match[1], "0.628");
+  });
+
+  it("matches server stopping line", () => {
+    const line = "[15:52:33] [Server thread/INFO]: Stopping server";
+    const result = matchEvent(line);
+    assert.ok(result);
+    assert.equal(result.event.name, "server-stopping");
+  });
+
+  it("server-ready builder contains the boot time and emerald color", () => {
+    const event = EVENTS.find((e) => e.name === "server-ready");
+    const payload = event.build(["full", "1.234"], createState());
+    assert.equal(payload.embeds[0].color, 0x10b981);
+    assert.match(payload.embeds[0].description, /Serveur en ligne/);
+    assert.match(payload.embeds[0].description, /1\.234s/);
+  });
+
+  it("server-stopping builder returns the offline embed with red color", () => {
+    const event = EVENTS.find((e) => e.name === "server-stopping");
+    const payload = event.build([], createState());
+    assert.equal(payload.embeds[0].color, 0xdc2626);
+    assert.match(payload.embeds[0].description, /hors ligne/);
+  });
+});
+
 describe("matchEvent — pattern matching", () => {
   it("matches a player join line", () => {
     const line = "[15:00:00] [Server thread/INFO]: 1AlphaOmega0 joined the game";
