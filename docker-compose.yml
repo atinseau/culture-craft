@@ -13,7 +13,7 @@ services:
       # --- Server identity ---
       SERVER_NAME: ${MINECRAFT_SERVER_NAME:-Culture Craft}
       MOTD: ${MINECRAFT_MOTD:-§aCulture Craft§r}
-      ICON: /logo.png
+      ICON: https://raw.githubusercontent.com/atinseau/culture-craft/master/logo.png
       OVERRIDE_ICON: "true"
 
       # --- Gameplay ---
@@ -66,7 +66,6 @@ services:
     volumes:
       - ./minecraft-data:/data
       - ./mods:/mods:ro
-      - ./logo.png:/logo.png:ro
 
     healthcheck:
       test: ["CMD", "mc-health"]
