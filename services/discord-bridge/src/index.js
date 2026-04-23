@@ -5,6 +5,7 @@ import {
   createState,
   buildCrashEvent,
   buildAttachEvent,
+  buildShutdownEvent,
 } from "./events.js";
 import { createHealthState, createHealthServer } from "./health.js";
 import { DEFAULT_CONTAINER_PATTERN } from "./utils/constants.js";
@@ -36,6 +37,33 @@ const health = createHealthState();
  * @returns {Promise<void>}
  */
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// On SIGTERM/SIGINT (orchestrator redeploy), flush an "offline" notification
+// before exiting — otherwise the bridge dies before seeing mc's "Stopping
+// server" log (compose kills services in reverse dependency order). Idempotent
+// so double-signals don't double-post; bounded by a 3 s timeout so we always
+// exit within the Docker grace window.
+let shuttingDown = false;
+async function handleShutdown(signal) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`${signal} received — notifying Discord before exit`);
+  try {
+    const event = buildShutdownEvent(state);
+    if (event) {
+      await Promise.race([
+        send(event.channel, event.payload),
+        sleep(3000),
+      ]);
+    }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Shutdown notification failed:", message);
+  }
+  process.exit(0);
+}
+process.on("SIGTERM", () => handleShutdown("SIGTERM"));
+process.on("SIGINT", () => handleShutdown("SIGINT"));
 
 /**
  * Run every log line through the event catalog and dispatch matches.

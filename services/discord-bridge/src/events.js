@@ -192,6 +192,34 @@ export function buildCrashEvent(state) {
 }
 
 /**
+ * Synthetic event emitted when the bridge itself receives SIGTERM/SIGINT.
+ * Orchestrators (Coolify, `docker compose down`) kill the bridge before mc
+ * via the `depends_on` reverse-order rule, so the bridge never sees mc's
+ * "Stopping server" log. This handler lets the bridge post the offline
+ * notification proactively before its Node process exits. Respects the
+ * LAST_STATE_KEY edge-trigger so a server-stopping that slipped through
+ * first won't produce a duplicate.
+ *
+ * @param {SharedState} state
+ * @returns {{ channel: string, payload: import('./discord.js').WebhookPayload } | null}
+ */
+export function buildShutdownEvent(state) {
+  if (state.get(LAST_STATE_KEY) === "down") return null;
+  state.set(LAST_STATE_KEY, "down");
+  return {
+    channel: CHANNELS.PLAYERS,
+    payload: {
+      embeds: [
+        {
+          color: COLORS.SERVER_DOWN,
+          description: `🟥 **Serveur hors ligne**`,
+        },
+      ],
+    },
+  };
+}
+
+/**
  * Synthetic event emitted right after the bridge attaches to a container.
  * If the MC container is already fully booted (`healthy` status), the
  * bridge missed the historical `Done (...)!` log — we post a "bridge
