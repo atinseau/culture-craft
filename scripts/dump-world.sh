@@ -1,5 +1,9 @@
 #!/bin/sh
-# Dump the running Minecraft container's world into a compressed .zip archive.
+# Dump the running Minecraft container's /data into a compressed .zip archive.
+# Captures all stateful runtime data: world/, config/ (Savs balances, GUI Shop
+# sqlite, permissions files), server.properties, etc. Excludes artifacts that
+# are redeployed from the repo or regenerated on boot: mods/, libraries/,
+# versions/, .cache/, logs/, .fabric/, fastback history under world/.git.
 # Safe with players online — freezes writes via RCON during the copy.
 #
 # Usage: ./scripts/dump-world.sh

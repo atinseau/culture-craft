@@ -1,0 +1,11 @@
+{
+  "disabled": true,
+  "database": {
+    "type": "sqlite",
+    "currency": "./config/guishop.sqlite"
+  },
+  "economy": {
+    "currencies": {},
+    "accounts": {}
+  }
+}

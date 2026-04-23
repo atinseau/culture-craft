@@ -2,6 +2,9 @@ services:
   mc:
     image: itzg/minecraft-server:java21
     pull_policy: always
+    # Bootstrap wrapper copies repo-managed configs + datapacks into /data
+    # before handing off to itzg's /start. Source of truth = repo.
+    entrypoint: ["/bin/sh", "/bootstrap/mc-bootstrap.sh"]
     ports:
       - "${PORT:-25565}:25565"
     environment:
@@ -59,7 +62,9 @@ services:
       # Redstone: alternate-current
       # QoL: chunky, ping-wheel, fallingtree, ledger, fastback, waystones,
       #      better-serversleep, universal-graves
-      MODRINTH_PROJECTS: "lithium,ferrite-core,krypton,spark,c2me-fabric,alternate-current,chunky,ping-wheel,fallingtree,ledger,fastback,waystones,better-serversleep,universal-graves"
+      # Economy: savs-common-economy (tokens + API), rwc-gui-shop (/guishop GUI
+      #          admin market), universal-shops (player shop blocks)
+      MODRINTH_PROJECTS: "lithium,ferrite-core,krypton,spark,c2me-fabric,alternate-current,chunky,ping-wheel,fallingtree,ledger,fastback,waystones,better-serversleep,universal-graves,savs-common-economy,rwc-gui-shop,universal-shops"
       MODRINTH_DOWNLOAD_DEPENDENCIES: required
       REMOVE_OLD_MODS: "true"
 
@@ -70,6 +75,9 @@ services:
     volumes:
       - ./minecraft-data:/data
       - ./mods:/mods:ro
+      - ./config:/bootstrap/config:ro
+      - ./datapacks:/bootstrap/datapacks:ro
+      - ./scripts/mc-bootstrap.sh:/bootstrap/mc-bootstrap.sh:ro
 
     healthcheck:
       test: ["CMD", "mc-health"]
