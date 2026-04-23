@@ -1,0 +1,12 @@
+.git
+.gitignore
+.env
+.env.example
+README.md
+Makefile
+minecraft-data
+dumps
+mods
+node_modules
+services/discord-bridge
+logo.png

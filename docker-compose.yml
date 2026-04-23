@@ -1,10 +1,13 @@
 services:
   mc:
-    image: itzg/minecraft-server:java21
-    pull_policy: always
-    # Bootstrap wrapper copies repo-managed configs + datapacks into /data
-    # before handing off to itzg's /start. Source of truth = repo.
-    entrypoint: ["/bin/sh", "/bootstrap/mc-bootstrap.sh"]
+    # Custom image extends itzg/minecraft-server to bake in the economy
+    # configs, datapack, and bootstrap entrypoint. Needed because Coolify
+    # does not git-sync the repo into the app dir — only the compose file
+    # and build contexts are pushed, so repo-level bind mounts resolve to
+    # empty auto-created dirs.
+    build:
+      context: .
+      dockerfile: services/mc/Dockerfile
     ports:
       - "${PORT:-25565}:25565"
     environment:
@@ -75,9 +78,6 @@ services:
     volumes:
       - ./minecraft-data:/data
       - ./mods:/mods:ro
-      - ./config:/bootstrap/config:ro
-      - ./datapacks:/bootstrap/datapacks:ro
-      - ./scripts/mc-bootstrap.sh:/bootstrap/mc-bootstrap.sh:ro
 
     healthcheck:
       test: ["CMD", "mc-health"]
