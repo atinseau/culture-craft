@@ -502,6 +502,17 @@
           "sellPrice": -1,
           "currency": "savs_common_economy:dollar",
           "components": {}
+        },
+        {
+          "name": "Dirt",
+          "itemId": "minecraft:dirt",
+          "description": [
+            "Building - terraforming bulk"
+          ],
+          "buyPrice": 1,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
         }
       ]
     },
