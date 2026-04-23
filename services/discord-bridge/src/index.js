@@ -46,11 +46,10 @@ function processLine(line) {
   health.lastLineAt = Date.now();
   const result = matchEvent(line);
   if (!result) return;
+  const payload = result.event.build(result.match, state);
+  if (!payload) return;
   console.log(`→ ${result.event.name}: ${line.trim()}`);
-  send(
-    result.event.channel,
-    result.event.build(result.match, state),
-  ).catch((err) =>
+  send(result.event.channel, payload).catch((err) =>
     console.error(`Send failed for ${result.event.name}:`, err.message),
   );
 }
@@ -85,7 +84,7 @@ async function main() {
       // Surface the current status so the Discord channel isn't silent.
       try {
         const inspectData = await container.inspect();
-        const attachEvent = buildAttachEvent(inspectData);
+        const attachEvent = buildAttachEvent(inspectData, state);
         if (attachEvent) {
           await send(attachEvent.channel, attachEvent.payload);
         }

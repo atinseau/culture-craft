@@ -8,6 +8,12 @@ import { sessionKey } from "./utils/state.js";
 // resolves to distinguish a clean stop from a crash.
 const GRACEFUL_STOP_KEY = "lifecycle:graceful-stop-pending";
 
+// Edge-triggered lifecycle reporting: remember the last state we announced
+// to Discord ("up" | "down") so we only post on transitions. During a crash
+// loop, we post "hors ligne" once on the first failure, then stay silent
+// until a successful "Serveur en ligne" resets the edge.
+const LAST_STATE_KEY = "lifecycle:last-reported-state";
+
 // Re-export state helpers so callers only need to import from "./events.js".
 export { createState, sessionKey } from "./utils/state.js";
 // Re-export duration too — useful for tests and downstream events.
@@ -55,6 +61,8 @@ export const EVENTS = [
     build: ([, bootTime], state) => {
       // New boot — clear any stale graceful-stop flag from the previous run.
       state.delete(GRACEFUL_STOP_KEY);
+      if (state.get(LAST_STATE_KEY) === "up") return null;
+      state.set(LAST_STATE_KEY, "up");
       return {
         embeds: [
           {
@@ -73,6 +81,8 @@ export const EVENTS = [
       // Mark the shutdown as graceful so the main loop won't post a crash
       // notification when the log stream ends moments later.
       state.set(GRACEFUL_STOP_KEY, true);
+      if (state.get(LAST_STATE_KEY) === "down") return null;
+      state.set(LAST_STATE_KEY, "down");
       return {
         embeds: [
           {
@@ -166,6 +176,8 @@ export function buildCrashEvent(state) {
   const wasGraceful = state.get(GRACEFUL_STOP_KEY) === true;
   state.delete(GRACEFUL_STOP_KEY);
   if (wasGraceful) return null;
+  if (state.get(LAST_STATE_KEY) === "down") return null;
+  state.set(LAST_STATE_KEY, "down");
   return {
     channel: CHANNELS.PLAYERS,
     payload: {
@@ -191,9 +203,11 @@ export function buildCrashEvent(state) {
  * @param {{ State?: { Health?: { Status?: string } } } | null | undefined} inspectData
  * @returns {{ channel: string, payload: import('./discord.js').WebhookPayload } | null}
  */
-export function buildAttachEvent(inspectData) {
+export function buildAttachEvent(inspectData, state) {
   const healthStatus = inspectData?.State?.Health?.Status;
   if (healthStatus !== "healthy") return null;
+  if (state && state.get(LAST_STATE_KEY) === "up") return null;
+  if (state) state.set(LAST_STATE_KEY, "up");
   return {
     channel: CHANNELS.PLAYERS,
     payload: {

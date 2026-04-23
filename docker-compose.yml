@@ -69,6 +69,9 @@ services:
       #          admin market), universal-shops (player shop blocks)
       MODRINTH_PROJECTS: "lithium,ferrite-core,krypton,spark,c2me-fabric,alternate-current,chunky,ping-wheel,fallingtree,ledger,fastback,waystones,better-serversleep,universal-graves,savs-common-economy,rwc-gui-shop,universal-shops"
       MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      # Savs Common Economy only ships alpha builds for 1.21.11. Allow alpha
+      # globally (cascades to include beta + release).
+      MODRINTH_ALLOWED_VERSION_TYPE: alpha
       REMOVE_OLD_MODS: "true"
 
       # --- RCON (not exposed; access via `docker compose exec mc rcon-cli`) ---
