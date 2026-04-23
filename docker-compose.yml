@@ -67,7 +67,8 @@ services:
       #      better-serversleep, universal-graves
       # Economy: savs-common-economy (tokens + API), rwc-gui-shop (/guishop GUI
       #          admin market), universal-shops (player shop blocks)
-      MODRINTH_PROJECTS: "lithium,ferrite-core,krypton,spark,c2me-fabric,alternate-current,chunky,ping-wheel,fallingtree,ledger,fastback,waystones,better-serversleep,universal-graves,savs-common-economy,rwc-gui-shop,universal-shops"
+      # Utility: command-maker (alias /market, /sell → /guishop open ...)
+      MODRINTH_PROJECTS: "lithium,ferrite-core,krypton,spark,c2me-fabric,alternate-current,chunky,ping-wheel,fallingtree,ledger,fastback,waystones,better-serversleep,universal-graves,savs-common-economy,rwc-gui-shop,universal-shops,command-maker"
       MODRINTH_DOWNLOAD_DEPENDENCIES: required
       # Savs Common Economy only ships alpha builds for 1.21.11. Allow alpha
       # globally (cascades to include beta + release).
