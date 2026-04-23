@@ -1,4 +1,5 @@
 {
   "market": "guishop open market @s",
-  "sell": "guishop open sell @s"
+  "sell": "guishop open sell @s",
+  "ce_give": "givemoney ${player}"
 }
