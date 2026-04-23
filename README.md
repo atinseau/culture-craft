@@ -18,21 +18,28 @@ performance and quality-of-life mods.
 
 ```
 culture-craft/
-├── Makefile            # task runner
-├── docker-compose.yml  # single-service stack
-├── .env                # secrets + overrides (gitignored)
-├── .env.example        # template with all keys
-├── minecraft-data/     # world + player state (gitignored)
-├── mods/               # drop .jar files here for manual mods
-├── config/             # source-of-truth mod configs (synced before first boot)
-│   ├── savs-common-economy/
+├── Makefile              # task runner
+├── docker-compose.yml    # mc + discord-bridge stack
+├── .env / .env.example   # secrets + overrides (gitignored / template)
+├── .dockerignore         # keeps the mc build context lean
+├── minecraft-data/       # world + runtime state (gitignored)
+├── mods/                 # drop .jar files here for manual mods
+├── config/               # source-of-truth mod configs (baked into mc image)
+│   ├── savs-common-economy/  (config.json + worth.json)
+│   ├── CommandMaker/         (aliases.json → /market, /sell)
 │   ├── guishop.json
 │   └── guishopeconomy.json
-├── datapacks/          # source-of-truth datapacks (synced into world on deploy)
-│   └── culture-economy/# advancement → token rewards
+├── datapacks/
+│   └── culture-economy/      # advancement → token rewards (baked into mc image)
+├── services/
+│   ├── mc/Dockerfile         # extends itzg/minecraft-server, bakes configs/datapack/bootstrap
+│   └── discord-bridge/       # sidecar that relays MC events to Discord
 └── scripts/
-    ├── dump-world.sh   # snapshot remote world into ./minecraft-data/
-    └── remote-shell.sh # shell into container or host
+    ├── mc-bootstrap.sh       # entrypoint wrapper: stages configs/datapack into /data
+    ├── dump-world.sh         # snapshot remote /data (incl. balances) → ./dumps/
+    ├── import-world.sh       # restore a dump onto the remote (with hardlink backup)
+    ├── rollback.sh           # revert to the most recent pre-import snapshot
+    └── remote-shell.sh       # shell into container or host
 ```
 
 ## Deployment
@@ -51,18 +58,25 @@ rsync -avz ./ <user>@<host>:/home/<user>/culture-craft/
 ssh <user>@<host> "cd culture-craft && docker compose up -d"
 ```
 
-The first boot downloads Fabric, fabric-api, and all mods listed in
-`MODRINTH_PROJECTS` (~2–5 min). Watch the progress with `make logs`.
+First boot builds the custom mc image (`services/mc/Dockerfile` extends
+`itzg/minecraft-server` and COPYs `./config/`, `./datapacks/`, and
+`scripts/mc-bootstrap.sh` into `/bootstrap/`). On every container start the
+bootstrap script runs before `/start`, copies those baked files into `/data`
+and chowns them to uid 1000, then hands off to itzg. Net effect: a `git push`
+is the whole deploy — no manual `cp`, no `/datapack enable`, no rebuild
+step. The Dockerfile path is required because Coolify only pushes the
+compose file + build contexts to the target, not arbitrary bind-mount
+contents.
 
-Configs (`./config/`) and the `culture-economy` datapack are staged into
-`/data` automatically by `scripts/mc-bootstrap.sh` on every container start —
-no manual `cp` or `/datapack enable` steps. Edit files under `./config/` or
-`./datapacks/` locally and redeploy to propagate.
+After that, itzg downloads Fabric, fabric-api, and every slug in
+`MODRINTH_PROJECTS` (~2–5 min the first time, cached afterwards). Watch with
+`make logs`.
 
 > **IaC semantics**: the repo is the source of truth for configs and
 > datapacks. In-game mutations (e.g. `/guishop additem`, editing
-> `savs-common-economy/config.json` live) are **lost on restart**. To add
-> shop items or tweak prices, edit the JSON locally and redeploy.
+> `savs-common-economy/config.json` live) are **lost on restart** — the
+> bootstrap re-stages the repo copy. To add shop items or tweak prices,
+> edit the JSON locally and redeploy.
 
 ### Migrating an existing world
 
@@ -119,60 +133,108 @@ Three complementary pipelines land in `/data/mods`:
 - [`fastback`](https://modrinth.com/mod/fastback) — git-backed incremental world backups
 
 **Economy**
-- [`savs-common-economy`](https://modrinth.com/mod/savs-common-economy) — tokens backend (`/bal`, `/pay`, `/baltop`, billets, Common Economy API)
-- [`rwc-gui-shop`](https://modrinth.com/mod/rwc-gui-shop) — GUI admin market (`/guishop`), branchable sur Savs via Common Economy API
-- [`universal-shops`](https://modrinth.com/mod/universal-shops) — shop blocks craftables par les joueurs (Polymer, aucun mod client requis)
+- [`savs-common-economy`](https://modrinth.com/mod/savs-common-economy) — tokens backend (`/bal`, `/pay`, `/baltop`, physical notes, Common Economy API)
+- [`rwc-gui-shop`](https://modrinth.com/mod/rwc-gui-shop) — GUI admin market, bridged to Savs via Common Economy API
+- [`universal-shops`](https://modrinth.com/mod/universal-shops) — craftable shop blocks for player-to-player trade (Polymer, vanilla client)
+- [`command-maker`](https://modrinth.com/mod/command-maker) — registers `/market` and `/sell` aliases onto `/guishop`
 
 ## Economy
 
-The server economy is a thin layer on top of vanilla gameplay. Core loop:
+Thin token layer on top of vanilla gameplay. Mining, farming, and breeding
+stay the only way to acquire core progression materials — tokens only buy
+*comfort*.
 
-- **Tokens come from** vanilla advancements (tiered 50 → 2000) and sale of
-  low-tier surplus (cobble, wood, iron, crops, common drops) to the admin
-  market. Rare ores (diamond, netherite, ancient debris, emerald) are **never**
-  bought by the admin — player-to-player only.
-- **Tokens buy** decoration blocks, biome-locked materials, structure-loot
-  convenience items (name tags, saddles, horse armor), and cosmetics from the
-  `/guishop` admin market. They do **not** buy raw progression materials.
-- **Player-to-player** trade happens via Universal Shops (craftable block
-  attached to a chest, GUI on right-click) or Savs chest shops (sign-based).
+### Token sources
 
-The philosophy: tokens are a comfort layer. Mining, farming, and breeding
-remain the only way to acquire core progression materials.
+- **Advancements** (one-shot, tiered 50 → 2000) — the dominant source of
+  income, covered by the `culture-economy` datapack.
+- **Admin sell market** (`/sell`, 70 items) — floor prices for surplus,
+  tiered 1 → 100 tokens:
+  - 1: common crops, eggs, feathers, common logs, cactus/bamboo/kelp, raw
+    meats, white wool, ink sac
+  - 2: rare logs, mob drops (bone/string/powder), cooked meats, coal, flint,
+    clay, cocoa, nether wart, chorus fruit
+  - 3: leather, iron/gold/redstone/lapis, glowstone dust, soul sand
+  - 5: blaze rod, obsidian, nether quartz, magma cream, honey bottle,
+    popped chorus fruit
+  - 8+: slime ball, phantom membrane, honeycomb, glowstone block,
+    prismarine, end rod
+  - 15-30: crying obsidian, diamond, emerald, turtle scute, nautilus shell,
+    ghast tear
+  - 50: shulker shell
+  - 100: ancient debris / netherite scrap
+  - Trash (cobble, dirt, stone variants, rotten flesh) is **not** accepted —
+    minimum price of 1 token/item against infinite cobblegen would break the
+    economy.
+- **Player-to-player trade** — Universal Shops blocks and Savs chest shops.
+
+### Token sinks
+
+- **Admin buy market** (`/market`, 45 items):
+  - Structure loot convenience: name tag (150), saddle (200), horse armor
+    (300/500/800), lead (50), shears (30)
+  - Decorative blocks: 6 terracotta (2), 4 colored wool (1)
+  - Building blocks: stone-family (smooth/polished/chiseled/mossy, 2-5),
+    sandstone variants (3), quartz block/smooth quartz (5), bricks (8),
+    nether / end-stone / prismarine bricks (8-10), polished blackstone
+    bricks (10), glass (2), glass pane (1), 4 stained glass (3), 6 concrete
+    (5)
+  - Notably **not** sold by admin: anything farmable (sugar cane, bamboo,
+    kelp, cactus, cocoa) — players grow their own.
+- **Player-to-player purchases** (emergent).
+
+No waystone cost, no enchant taxes, no death penalty — deferred until the
+first concrete need arises.
 
 ### Configuration files (`./config/`)
 
 | File | Role |
 |---|---|
-| `savs-common-economy/config.json` | Starting balance 50 tokens, `enableSellCommands: false` (GUI Shop is the admin market), chest shops on |
-| `savs-common-economy/worth.json` | Empty — Savs' `/sell` is disabled, prices live in `guishop.json` |
-| `guishop.json` | Admin market shop with ~35 items: admin buy-back floor (cobble/log/iron/crops/drops) + admin sell (terracotta/wool/biome-locked/convenience) |
-| `guishopeconomy.json` | Built-in GUI Shop economy **disabled** (`"disabled": true`) — bridge to Savs via Common Economy API |
+| `savs-common-economy/config.json` | Starting balance 50 tokens, `enableSellCommands: false`, chest shops on, currency symbol `" tokens"` |
+| `savs-common-economy/worth.json` | Empty — Savs' `/buy /sell /worth` CLI is off; pricing lives in `guishop.json` |
+| `guishop.json` | Two shops — `market` (45 items, buy only) + `sell` (70 items, sell only). Bridged to Savs via `"economyProviders": { "savs_common_economy:dollar": ["default"] }`. |
+| `guishopeconomy.json` | GUI Shop built-in economy **disabled** |
+| `CommandMaker/aliases.json` | `/market → guishop open market @s`, `/sell → guishop open sell @s` |
+
+**Important constraint**: `rwc-gui-shop` stores prices as `long` (integer).
+Decimal values get truncated to 0. Minimum sellable unit is therefore
+**1 token/item** — the catalogue is tiered around that floor.
 
 ### Datapack: `culture-economy`
 
-The `./datapacks/culture-economy/` datapack drives the advancement → token
-rewards. It polls once per second via `#minecraft:tick`, detects newly
-completed advancements (tag-gated to prevent double-rewards), credits the
-player's Savs wallet via `/givemoney`, and tracks the cumulative reward in a
-local `ce_earned` scoreboard for visibility.
+Drives the advancement → token rewards. Polls every 20 ticks (1 s) via
+`#minecraft:tick`, detects newly-completed advancements (tag-gated per
+advancement to avoid double-rewards), credits the player's Savs wallet via
+`/givemoney`, and tracks cumulative earnings in a local `ce_earned`
+scoreboard (inspectable with `/scoreboard players list <player>`).
 
-**Extending**: add lines to `check_all.mcfunction` — one per tracked
+**Extending**: add lines to
+`data/culture_economy/function/check_all.mcfunction` — one per tracked
 advancement (`adv`, `tag`, `amount`). No other files to edit.
 
 **Requires** `function-permission-level` ≥ 2 (default in `server.properties`)
 so the datapack can invoke `/givemoney`.
 
-### Post-first-boot verification
+### In-game commands
 
-One thing to validate in-game after Savs + GUI Shop load:
+Player:
+- `/bal`, `/baltop` — balance self / top
+- `/pay <player> <amount>` — transfer
+- `/withdraw <amount>` — mint a physical bank note
+- `/market`, `/sell` — open admin market / sell GUI (command-maker aliases)
+- `/guishop` — open default shop (same as `/market`)
+- `/shop create sell <price>` / `/shop create buy <price>` — create a
+  sign-based chest shop (Savs)
+- `/shop remove` / `/shop info` / `/shop list` — manage your chest shops
+- Craft a Trade Shop block (4 planks + 1 wool + 1 iron) to post a player
+  GUI shop on any adjacent container (Universal Shops)
 
-- **GUI Shop ↔ Savs bridge**: `guishop.json` declares
-  `"economyProviders": { "savs_common_economy:dollar": ["default"] }`. If
-  `/guishop` opens but reports "no balance" or "provider not found", the
-  account-id list may need tweaking. Check `make logs` for GUI Shop startup
-  messages listing recognised providers, adjust the JSON, then
-  `make rcon CMD='guishop reload'`.
+Admin (OP level 2+):
+- `/givemoney <player> <amount>`, `/takemoney`, `/setmoney`, `/resetmoney`
+- `/ecolog <player> <time> <unit>` — Savs transaction ledger
+- `/guishop create|delete|additem|removeitem|reload` — mutate shops live
+  (ephemeral: wiped on restart, edit `config/guishop.json` in the repo for
+  persistence)
 
 ## Performance tuning
 
