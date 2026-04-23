@@ -1,119 +1,1283 @@
 {
   "economyProviders": {
-    "savs_common_economy:dollar": ["default"]
+    "savs_common_economy:dollar": [
+      "default"
+    ]
   },
   "shops": [
     {
       "shopName": "market",
       "items": [
-        { "name": "Name Tag", "itemId": "minecraft:name_tag", "description": ["Structure loot convenience"], "buyPrice": 150, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Saddle", "itemId": "minecraft:saddle", "description": ["Structure loot convenience"], "buyPrice": 200, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Iron Horse Armor", "itemId": "minecraft:iron_horse_armor", "description": ["Structure loot convenience"], "buyPrice": 300, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Golden Horse Armor", "itemId": "minecraft:golden_horse_armor", "description": ["Structure loot convenience"], "buyPrice": 500, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Diamond Horse Armor", "itemId": "minecraft:diamond_horse_armor", "description": ["Structure loot convenience"], "buyPrice": 800, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Lead", "itemId": "minecraft:lead", "description": ["Tether animals"], "buyPrice": 50, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Shears", "itemId": "minecraft:shears", "description": ["Utility"], "buyPrice": 30, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "White Terracotta", "itemId": "minecraft:white_terracotta", "description": ["Decoration"], "buyPrice": 2, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Red Terracotta", "itemId": "minecraft:red_terracotta", "description": ["Decoration"], "buyPrice": 2, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Blue Terracotta", "itemId": "minecraft:blue_terracotta", "description": ["Decoration"], "buyPrice": 2, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Green Terracotta", "itemId": "minecraft:green_terracotta", "description": ["Decoration"], "buyPrice": 2, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Black Terracotta", "itemId": "minecraft:black_terracotta", "description": ["Decoration"], "buyPrice": 2, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Yellow Terracotta", "itemId": "minecraft:yellow_terracotta", "description": ["Decoration"], "buyPrice": 2, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "White Wool", "itemId": "minecraft:white_wool", "description": ["Decoration"], "buyPrice": 1, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Red Wool", "itemId": "minecraft:red_wool", "description": ["Decoration"], "buyPrice": 1, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Blue Wool", "itemId": "minecraft:blue_wool", "description": ["Decoration"], "buyPrice": 1, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Black Wool", "itemId": "minecraft:black_wool", "description": ["Decoration"], "buyPrice": 1, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Cactus", "itemId": "minecraft:cactus", "description": ["Biome-locked: Desert"], "buyPrice": 3, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Bamboo", "itemId": "minecraft:bamboo", "description": ["Biome-locked: Jungle"], "buyPrice": 3, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Kelp", "itemId": "minecraft:kelp", "description": ["Biome-locked: Ocean"], "buyPrice": 3, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Sugar Cane", "itemId": "minecraft:sugar_cane", "description": ["Biome-locked: near water"], "buyPrice": 3, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Cocoa Beans", "itemId": "minecraft:cocoa_beans", "description": ["Biome-locked: Jungle"], "buyPrice": 3, "sellPrice": -1, "currency": "savs_common_economy:dollar", "components": {} }
+        {
+          "name": "Name Tag",
+          "itemId": "minecraft:name_tag",
+          "description": [
+            "Structure loot convenience"
+          ],
+          "buyPrice": 150,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Saddle",
+          "itemId": "minecraft:saddle",
+          "description": [
+            "Structure loot convenience"
+          ],
+          "buyPrice": 200,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Iron Horse Armor",
+          "itemId": "minecraft:iron_horse_armor",
+          "description": [
+            "Structure loot convenience"
+          ],
+          "buyPrice": 300,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Golden Horse Armor",
+          "itemId": "minecraft:golden_horse_armor",
+          "description": [
+            "Structure loot convenience"
+          ],
+          "buyPrice": 500,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Diamond Horse Armor",
+          "itemId": "minecraft:diamond_horse_armor",
+          "description": [
+            "Structure loot convenience"
+          ],
+          "buyPrice": 800,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Lead",
+          "itemId": "minecraft:lead",
+          "description": [
+            "Tether animals"
+          ],
+          "buyPrice": 50,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Shears",
+          "itemId": "minecraft:shears",
+          "description": [
+            "Utility"
+          ],
+          "buyPrice": 30,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "White Terracotta",
+          "itemId": "minecraft:white_terracotta",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Red Terracotta",
+          "itemId": "minecraft:red_terracotta",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Blue Terracotta",
+          "itemId": "minecraft:blue_terracotta",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Green Terracotta",
+          "itemId": "minecraft:green_terracotta",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Black Terracotta",
+          "itemId": "minecraft:black_terracotta",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Yellow Terracotta",
+          "itemId": "minecraft:yellow_terracotta",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "White Wool",
+          "itemId": "minecraft:white_wool",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 1,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Red Wool",
+          "itemId": "minecraft:red_wool",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 1,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Blue Wool",
+          "itemId": "minecraft:blue_wool",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 1,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Black Wool",
+          "itemId": "minecraft:black_wool",
+          "description": [
+            "Decoration"
+          ],
+          "buyPrice": 1,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Stone Bricks",
+          "itemId": "minecraft:stone_bricks",
+          "description": [
+            "Building - classic castle"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Mossy Stone Bricks",
+          "itemId": "minecraft:mossy_stone_bricks",
+          "description": [
+            "Building - aged"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Chiseled Stone Bricks",
+          "itemId": "minecraft:chiseled_stone_bricks",
+          "description": [
+            "Building - accent"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Smooth Stone",
+          "itemId": "minecraft:smooth_stone",
+          "description": [
+            "Building - clean grey"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Polished Andesite",
+          "itemId": "minecraft:polished_andesite",
+          "description": [
+            "Building - grey"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Polished Diorite",
+          "itemId": "minecraft:polished_diorite",
+          "description": [
+            "Building - white-ish"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Polished Granite",
+          "itemId": "minecraft:polished_granite",
+          "description": [
+            "Building - warm"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cut Sandstone",
+          "itemId": "minecraft:cut_sandstone",
+          "description": [
+            "Building - desert"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cut Red Sandstone",
+          "itemId": "minecraft:cut_red_sandstone",
+          "description": [
+            "Building - badlands"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Quartz Block",
+          "itemId": "minecraft:quartz_block",
+          "description": [
+            "Building - white premium"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Smooth Quartz",
+          "itemId": "minecraft:smooth_quartz_block",
+          "description": [
+            "Building - clean white"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Bricks",
+          "itemId": "minecraft:bricks",
+          "description": [
+            "Building - red brick classic"
+          ],
+          "buyPrice": 8,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Nether Bricks",
+          "itemId": "minecraft:nether_bricks",
+          "description": [
+            "Building - nether theme"
+          ],
+          "buyPrice": 8,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Polished Blackstone Bricks",
+          "itemId": "minecraft:polished_blackstone_bricks",
+          "description": [
+            "Building - dark accent"
+          ],
+          "buyPrice": 10,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "End Stone Bricks",
+          "itemId": "minecraft:end_stone_bricks",
+          "description": [
+            "Building - end theme"
+          ],
+          "buyPrice": 8,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Prismarine Bricks",
+          "itemId": "minecraft:prismarine_bricks",
+          "description": [
+            "Building - aquatic"
+          ],
+          "buyPrice": 10,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Glass",
+          "itemId": "minecraft:glass",
+          "description": [
+            "Building - essential"
+          ],
+          "buyPrice": 2,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Glass Pane",
+          "itemId": "minecraft:glass_pane",
+          "description": [
+            "Building - window slim"
+          ],
+          "buyPrice": 1,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "White Stained Glass",
+          "itemId": "minecraft:white_stained_glass",
+          "description": [
+            "Decoration - window"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Red Stained Glass",
+          "itemId": "minecraft:red_stained_glass",
+          "description": [
+            "Decoration - window"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Blue Stained Glass",
+          "itemId": "minecraft:blue_stained_glass",
+          "description": [
+            "Decoration - window"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Black Stained Glass",
+          "itemId": "minecraft:black_stained_glass",
+          "description": [
+            "Decoration - window"
+          ],
+          "buyPrice": 3,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "White Concrete",
+          "itemId": "minecraft:white_concrete",
+          "description": [
+            "Decoration - vibrant"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Red Concrete",
+          "itemId": "minecraft:red_concrete",
+          "description": [
+            "Decoration - vibrant"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Blue Concrete",
+          "itemId": "minecraft:blue_concrete",
+          "description": [
+            "Decoration - vibrant"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Black Concrete",
+          "itemId": "minecraft:black_concrete",
+          "description": [
+            "Decoration - vibrant"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Yellow Concrete",
+          "itemId": "minecraft:yellow_concrete",
+          "description": [
+            "Decoration - vibrant"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Green Concrete",
+          "itemId": "minecraft:green_concrete",
+          "description": [
+            "Decoration - vibrant"
+          ],
+          "buyPrice": 5,
+          "sellPrice": -1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        }
       ]
     },
     {
       "shopName": "sell",
       "items": [
-        { "name": "Wheat", "itemId": "minecraft:wheat", "description": ["Farm basic"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Carrot", "itemId": "minecraft:carrot", "description": ["Farm basic"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Potato", "itemId": "minecraft:potato", "description": ["Farm basic"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Beetroot", "itemId": "minecraft:beetroot", "description": ["Farm basic"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Egg", "itemId": "minecraft:egg", "description": ["Chicken farm"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Feather", "itemId": "minecraft:feather", "description": ["Chicken drop"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Sugar Cane", "itemId": "minecraft:sugar_cane", "description": ["Farmable"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Pumpkin", "itemId": "minecraft:pumpkin", "description": ["Farm block"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Melon Slice", "itemId": "minecraft:melon_slice", "description": ["Farm"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "White Wool", "itemId": "minecraft:white_wool", "description": ["Sheep farm"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Ink Sac", "itemId": "minecraft:ink_sac", "description": ["Squid"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Oak Log", "itemId": "minecraft:oak_log", "description": ["Common wood"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Birch Log", "itemId": "minecraft:birch_log", "description": ["Common wood"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Spruce Log", "itemId": "minecraft:spruce_log", "description": ["Common wood"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Jungle Log", "itemId": "minecraft:jungle_log", "description": ["Common wood"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Acacia Log", "itemId": "minecraft:acacia_log", "description": ["Savanna wood"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Dark Oak Log", "itemId": "minecraft:dark_oak_log", "description": ["Rare wood"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Cherry Log", "itemId": "minecraft:cherry_log", "description": ["Rare wood"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Mangrove Log", "itemId": "minecraft:mangrove_log", "description": ["Rare wood"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Bone", "itemId": "minecraft:bone", "description": ["Skeleton drop"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "String", "itemId": "minecraft:string", "description": ["Spider drop"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Gunpowder", "itemId": "minecraft:gunpowder", "description": ["Creeper drop"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Spider Eye", "itemId": "minecraft:spider_eye", "description": ["Rare spider drop"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Glow Ink Sac", "itemId": "minecraft:glow_ink_sac", "description": ["Glow squid (cave)"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Raw Beef", "itemId": "minecraft:beef", "description": ["Cow drop"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Raw Porkchop", "itemId": "minecraft:porkchop", "description": ["Pig drop"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Raw Mutton", "itemId": "minecraft:mutton", "description": ["Sheep drop"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Raw Chicken", "itemId": "minecraft:chicken", "description": ["Chicken drop"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Cooked Beef", "itemId": "minecraft:cooked_beef", "description": ["Processed"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Cooked Porkchop", "itemId": "minecraft:cooked_porkchop", "description": ["Processed"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Cooked Mutton", "itemId": "minecraft:cooked_mutton", "description": ["Processed"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Cooked Chicken", "itemId": "minecraft:cooked_chicken", "description": ["Processed"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Leather", "itemId": "minecraft:leather", "description": ["Cow breed"], "buyPrice": -1, "sellPrice": 3, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Coal", "itemId": "minecraft:coal", "description": ["Mining / charcoal"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Iron Ingot", "itemId": "minecraft:iron_ingot", "description": ["Mining / farm"], "buyPrice": -1, "sellPrice": 3, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Flint", "itemId": "minecraft:flint", "description": ["Gravel drop"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Clay Ball", "itemId": "minecraft:clay_ball", "description": ["Underwater"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Redstone Dust", "itemId": "minecraft:redstone", "description": ["Mining"], "buyPrice": -1, "sellPrice": 3, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Cactus", "itemId": "minecraft:cactus", "description": ["Biome-locked"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Bamboo", "itemId": "minecraft:bamboo", "description": ["Biome-locked"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Kelp", "itemId": "minecraft:kelp", "description": ["Biome-locked"], "buyPrice": -1, "sellPrice": 1, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Cocoa Beans", "itemId": "minecraft:cocoa_beans", "description": ["Biome-locked"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Honey Bottle", "itemId": "minecraft:honey_bottle", "description": ["Bee farm"], "buyPrice": -1, "sellPrice": 5, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Honeycomb", "itemId": "minecraft:honeycomb", "description": ["Bee farm"], "buyPrice": -1, "sellPrice": 8, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Nether Wart", "itemId": "minecraft:nether_wart", "description": ["Nether farm"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Glowstone Dust", "itemId": "minecraft:glowstone_dust", "description": ["Nether harvest"], "buyPrice": -1, "sellPrice": 3, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Soul Sand", "itemId": "minecraft:soul_sand", "description": ["Nether"], "buyPrice": -1, "sellPrice": 3, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Nether Quartz", "itemId": "minecraft:quartz", "description": ["Nether mining"], "buyPrice": -1, "sellPrice": 5, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Magma Cream", "itemId": "minecraft:magma_cream", "description": ["Crafted/drop"], "buyPrice": -1, "sellPrice": 5, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Slime Ball", "itemId": "minecraft:slime_ball", "description": ["Slime chunk"], "buyPrice": -1, "sellPrice": 8, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Phantom Membrane", "itemId": "minecraft:phantom_membrane", "description": ["Aerial combat"], "buyPrice": -1, "sellPrice": 8, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Blaze Rod", "itemId": "minecraft:blaze_rod", "description": ["Fortress, dangerous"], "buyPrice": -1, "sellPrice": 5, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Lapis Lazuli", "itemId": "minecraft:lapis_lazuli", "description": ["Enchanting material"], "buyPrice": -1, "sellPrice": 3, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Obsidian", "itemId": "minecraft:obsidian", "description": ["Crafted with diamond pick"], "buyPrice": -1, "sellPrice": 5, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Gold Ingot", "itemId": "minecraft:gold_ingot", "description": ["Nether-farmable"], "buyPrice": -1, "sellPrice": 3, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Emerald", "itemId": "minecraft:emerald", "description": ["Villager trade / mountain"], "buyPrice": -1, "sellPrice": 15, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Diamond", "itemId": "minecraft:diamond", "description": ["Rare mining"], "buyPrice": -1, "sellPrice": 25, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Crying Obsidian", "itemId": "minecraft:crying_obsidian", "description": ["Piglin bartering"], "buyPrice": -1, "sellPrice": 15, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Ancient Debris", "itemId": "minecraft:ancient_debris", "description": ["Endgame mining"], "buyPrice": -1, "sellPrice": 100, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Netherite Scrap", "itemId": "minecraft:netherite_scrap", "description": ["Smelted debris"], "buyPrice": -1, "sellPrice": 100, "currency": "savs_common_economy:dollar", "components": {} },
-
-        { "name": "Prismarine Shard", "itemId": "minecraft:prismarine_shard", "description": ["Monument raid"], "buyPrice": -1, "sellPrice": 10, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Prismarine Crystals", "itemId": "minecraft:prismarine_crystals", "description": ["Monument raid"], "buyPrice": -1, "sellPrice": 8, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Glowstone", "itemId": "minecraft:glowstone", "description": ["Nether block"], "buyPrice": -1, "sellPrice": 10, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Nautilus Shell", "itemId": "minecraft:nautilus_shell", "description": ["Fishing / drowned"], "buyPrice": -1, "sellPrice": 25, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Shulker Shell", "itemId": "minecraft:shulker_shell", "description": ["End city combat"], "buyPrice": -1, "sellPrice": 50, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Chorus Fruit", "itemId": "minecraft:chorus_fruit", "description": ["End plant"], "buyPrice": -1, "sellPrice": 2, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Popped Chorus Fruit", "itemId": "minecraft:popped_chorus_fruit", "description": ["Smelted"], "buyPrice": -1, "sellPrice": 5, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "End Rod", "itemId": "minecraft:end_rod", "description": ["Endgame craft"], "buyPrice": -1, "sellPrice": 10, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Ghast Tear", "itemId": "minecraft:ghast_tear", "description": ["Rare drop"], "buyPrice": -1, "sellPrice": 30, "currency": "savs_common_economy:dollar", "components": {} },
-        { "name": "Turtle Scute", "itemId": "minecraft:turtle_scute", "description": ["Slow breeding"], "buyPrice": -1, "sellPrice": 20, "currency": "savs_common_economy:dollar", "components": {} }
+        {
+          "name": "Wheat",
+          "itemId": "minecraft:wheat",
+          "description": [
+            "Farm basic"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Carrot",
+          "itemId": "minecraft:carrot",
+          "description": [
+            "Farm basic"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Potato",
+          "itemId": "minecraft:potato",
+          "description": [
+            "Farm basic"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Beetroot",
+          "itemId": "minecraft:beetroot",
+          "description": [
+            "Farm basic"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Egg",
+          "itemId": "minecraft:egg",
+          "description": [
+            "Chicken farm"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Feather",
+          "itemId": "minecraft:feather",
+          "description": [
+            "Chicken drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Sugar Cane",
+          "itemId": "minecraft:sugar_cane",
+          "description": [
+            "Farmable"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Pumpkin",
+          "itemId": "minecraft:pumpkin",
+          "description": [
+            "Farm block"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Melon Slice",
+          "itemId": "minecraft:melon_slice",
+          "description": [
+            "Farm"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "White Wool",
+          "itemId": "minecraft:white_wool",
+          "description": [
+            "Sheep farm"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Ink Sac",
+          "itemId": "minecraft:ink_sac",
+          "description": [
+            "Squid"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Oak Log",
+          "itemId": "minecraft:oak_log",
+          "description": [
+            "Common wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Birch Log",
+          "itemId": "minecraft:birch_log",
+          "description": [
+            "Common wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Spruce Log",
+          "itemId": "minecraft:spruce_log",
+          "description": [
+            "Common wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Jungle Log",
+          "itemId": "minecraft:jungle_log",
+          "description": [
+            "Common wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Acacia Log",
+          "itemId": "minecraft:acacia_log",
+          "description": [
+            "Savanna wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Dark Oak Log",
+          "itemId": "minecraft:dark_oak_log",
+          "description": [
+            "Rare wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cherry Log",
+          "itemId": "minecraft:cherry_log",
+          "description": [
+            "Rare wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Mangrove Log",
+          "itemId": "minecraft:mangrove_log",
+          "description": [
+            "Rare wood"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Bone",
+          "itemId": "minecraft:bone",
+          "description": [
+            "Skeleton drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "String",
+          "itemId": "minecraft:string",
+          "description": [
+            "Spider drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Gunpowder",
+          "itemId": "minecraft:gunpowder",
+          "description": [
+            "Creeper drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Spider Eye",
+          "itemId": "minecraft:spider_eye",
+          "description": [
+            "Rare spider drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Glow Ink Sac",
+          "itemId": "minecraft:glow_ink_sac",
+          "description": [
+            "Glow squid (cave)"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Raw Beef",
+          "itemId": "minecraft:beef",
+          "description": [
+            "Cow drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Raw Porkchop",
+          "itemId": "minecraft:porkchop",
+          "description": [
+            "Pig drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Raw Mutton",
+          "itemId": "minecraft:mutton",
+          "description": [
+            "Sheep drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Raw Chicken",
+          "itemId": "minecraft:chicken",
+          "description": [
+            "Chicken drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cooked Beef",
+          "itemId": "minecraft:cooked_beef",
+          "description": [
+            "Processed"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cooked Porkchop",
+          "itemId": "minecraft:cooked_porkchop",
+          "description": [
+            "Processed"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cooked Mutton",
+          "itemId": "minecraft:cooked_mutton",
+          "description": [
+            "Processed"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cooked Chicken",
+          "itemId": "minecraft:cooked_chicken",
+          "description": [
+            "Processed"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Leather",
+          "itemId": "minecraft:leather",
+          "description": [
+            "Cow breed"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 3,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Coal",
+          "itemId": "minecraft:coal",
+          "description": [
+            "Mining / charcoal"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Iron Ingot",
+          "itemId": "minecraft:iron_ingot",
+          "description": [
+            "Mining / farm"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 3,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Flint",
+          "itemId": "minecraft:flint",
+          "description": [
+            "Gravel drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Clay Ball",
+          "itemId": "minecraft:clay_ball",
+          "description": [
+            "Underwater"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Redstone Dust",
+          "itemId": "minecraft:redstone",
+          "description": [
+            "Mining"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 3,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cactus",
+          "itemId": "minecraft:cactus",
+          "description": [
+            "Biome-locked"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Bamboo",
+          "itemId": "minecraft:bamboo",
+          "description": [
+            "Biome-locked"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Kelp",
+          "itemId": "minecraft:kelp",
+          "description": [
+            "Biome-locked"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 1,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Cocoa Beans",
+          "itemId": "minecraft:cocoa_beans",
+          "description": [
+            "Biome-locked"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Honey Bottle",
+          "itemId": "minecraft:honey_bottle",
+          "description": [
+            "Bee farm"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 5,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Honeycomb",
+          "itemId": "minecraft:honeycomb",
+          "description": [
+            "Bee farm"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 8,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Nether Wart",
+          "itemId": "minecraft:nether_wart",
+          "description": [
+            "Nether farm"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Glowstone Dust",
+          "itemId": "minecraft:glowstone_dust",
+          "description": [
+            "Nether harvest"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 3,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Soul Sand",
+          "itemId": "minecraft:soul_sand",
+          "description": [
+            "Nether"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 3,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Nether Quartz",
+          "itemId": "minecraft:quartz",
+          "description": [
+            "Nether mining"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 5,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Magma Cream",
+          "itemId": "minecraft:magma_cream",
+          "description": [
+            "Crafted/drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 5,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Slime Ball",
+          "itemId": "minecraft:slime_ball",
+          "description": [
+            "Slime chunk"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 8,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Phantom Membrane",
+          "itemId": "minecraft:phantom_membrane",
+          "description": [
+            "Aerial combat"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 8,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Blaze Rod",
+          "itemId": "minecraft:blaze_rod",
+          "description": [
+            "Fortress, dangerous"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 5,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Lapis Lazuli",
+          "itemId": "minecraft:lapis_lazuli",
+          "description": [
+            "Enchanting material"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 3,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Obsidian",
+          "itemId": "minecraft:obsidian",
+          "description": [
+            "Crafted with diamond pick"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 5,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Gold Ingot",
+          "itemId": "minecraft:gold_ingot",
+          "description": [
+            "Nether-farmable"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 3,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Emerald",
+          "itemId": "minecraft:emerald",
+          "description": [
+            "Villager trade / mountain"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 15,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Diamond",
+          "itemId": "minecraft:diamond",
+          "description": [
+            "Rare mining"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 25,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Crying Obsidian",
+          "itemId": "minecraft:crying_obsidian",
+          "description": [
+            "Piglin bartering"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 15,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Ancient Debris",
+          "itemId": "minecraft:ancient_debris",
+          "description": [
+            "Endgame mining"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 100,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Netherite Scrap",
+          "itemId": "minecraft:netherite_scrap",
+          "description": [
+            "Smelted debris"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 100,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Prismarine Shard",
+          "itemId": "minecraft:prismarine_shard",
+          "description": [
+            "Monument raid"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 10,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Prismarine Crystals",
+          "itemId": "minecraft:prismarine_crystals",
+          "description": [
+            "Monument raid"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 8,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Glowstone",
+          "itemId": "minecraft:glowstone",
+          "description": [
+            "Nether block"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 10,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Nautilus Shell",
+          "itemId": "minecraft:nautilus_shell",
+          "description": [
+            "Fishing / drowned"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 25,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Shulker Shell",
+          "itemId": "minecraft:shulker_shell",
+          "description": [
+            "End city combat"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 50,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Chorus Fruit",
+          "itemId": "minecraft:chorus_fruit",
+          "description": [
+            "End plant"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 2,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Popped Chorus Fruit",
+          "itemId": "minecraft:popped_chorus_fruit",
+          "description": [
+            "Smelted"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 5,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "End Rod",
+          "itemId": "minecraft:end_rod",
+          "description": [
+            "Endgame craft"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 10,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Ghast Tear",
+          "itemId": "minecraft:ghast_tear",
+          "description": [
+            "Rare drop"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 30,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        },
+        {
+          "name": "Turtle Scute",
+          "itemId": "minecraft:turtle_scute",
+          "description": [
+            "Slow breeding"
+          ],
+          "buyPrice": -1,
+          "sellPrice": 20,
+          "currency": "savs_common_economy:dollar",
+          "components": {}
+        }
       ]
     }
   ]
