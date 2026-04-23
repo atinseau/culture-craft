@@ -977,7 +977,7 @@
             "Bee farm"
           ],
           "buyPrice": -1,
-          "sellPrice": 5,
+          "sellPrice": 2,
           "currency": "savs_common_economy:dollar",
           "components": {}
         },
@@ -988,7 +988,7 @@
             "Bee farm"
           ],
           "buyPrice": -1,
-          "sellPrice": 8,
+          "sellPrice": 3,
           "currency": "savs_common_economy:dollar",
           "components": {}
         },
@@ -1120,7 +1120,7 @@
             "Villager trade / mountain"
           ],
           "buyPrice": -1,
-          "sellPrice": 15,
+          "sellPrice": 5,
           "currency": "savs_common_economy:dollar",
           "components": {}
         },
