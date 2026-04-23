@@ -18,5 +18,10 @@ if [ -d /bootstrap/datapacks/culture-economy ]; then
   cp -rL /bootstrap/datapacks/culture-economy /data/world/datapacks/
 fi
 
+# Bootstrap runs as root; itzg /start later drops privileges to uid 1000
+# (minecraft user). Files we just copied are root-owned from the image layer,
+# which blocks mods from writing (e.g. Savs' balances.json). Reclaim ownership.
+chown -R 1000:1000 /data/config /data/world/datapacks/culture-economy 2>/dev/null || true
+
 echo "[culture-craft] bootstrap: done, handing off to /start"
 exec /start "$@"
