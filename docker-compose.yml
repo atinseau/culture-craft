@@ -22,6 +22,13 @@ services:
       ICON: https://raw.githubusercontent.com/atinseau/culture-craft/master/logo.png
       OVERRIDE_ICON: "true"
 
+      # Polymer-generated resource pack (custom backpack textures, etc.).
+      # Regenerate via `make rcon CMD='polymer generate-pack'` then commit
+      # the new ./resources/polymer-resource-pack.zip + update SHA1 below.
+      RESOURCE_PACK: https://raw.githubusercontent.com/atinseau/culture-craft/master/resources/polymer-resource-pack.zip
+      RESOURCE_PACK_SHA1: 2115aa97f943b13bc26d700bb7a2f280739ff015
+      RESOURCE_PACK_ENFORCE: "true"
+
       # --- Gameplay ---
       DIFFICULTY: ${MINECRAFT_DIFFICULTY:-normal}
       MODE: ${MINECRAFT_GAME_MODE:-survival}
