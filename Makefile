@@ -1,13 +1,14 @@
 SHELL := /bin/sh
 SCRIPTS := scripts
 
-.PHONY: help dump import rollback shell host rcon logs
+.PHONY: help dump import rollback refresh-pack shell host rcon logs
 
 help:
 	@echo "Culture Craft — available commands:"
 	@echo "  make dump            Dump remote world into dumps/world-<ts>.zip"
 	@echo "  make import FILE=... Restore a dump onto the remote server"
 	@echo "  make rollback        Restore the most recent pre-import snapshot"
+	@echo "  make refresh-pack    Regenerate Polymer resource pack and push (after mod changes)"
 	@echo "  make shell           Interactive shell inside the Minecraft container"
 	@echo "  make host            Interactive SSH shell on the remote host"
 	@echo "  make rcon CMD=...    Run an RCON command (e.g. make rcon CMD='say hi')"
@@ -22,6 +23,9 @@ import:
 
 rollback:
 	@$(SCRIPTS)/rollback.sh
+
+refresh-pack:
+	@$(SCRIPTS)/refresh-pack.sh
 
 shell:
 	@$(SCRIPTS)/remote-shell.sh
