@@ -7,9 +7,9 @@
     " L "
   ],
   "key": {
-    "L": { "item": "minecraft:leather" },
-    "S": { "item": "minecraft:string" },
-    "C": { "item": "minecraft:chest" }
+    "L": "minecraft:leather",
+    "S": "minecraft:string",
+    "C": "minecraft:chest"
   },
   "result": {
     "id": "serverbackpacks:small",

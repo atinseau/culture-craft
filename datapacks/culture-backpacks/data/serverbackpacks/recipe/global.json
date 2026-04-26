@@ -7,11 +7,11 @@
     " N "
   ],
   "key": {
-    "e": { "item": "minecraft:ender_eye" },
-    "i": { "item": "minecraft:iron_ingot" },
-    "S": { "item": "minecraft:string" },
-    "N": { "item": "minecraft:nether_star" },
-    "E": { "tag": "serverbackpacks:large_backpacks" }
+    "e": "minecraft:ender_eye",
+    "i": "minecraft:iron_ingot",
+    "S": "minecraft:string",
+    "N": "minecraft:nether_star",
+    "E": "#serverbackpacks:large_backpacks"
   },
   "result": {
     "id": "serverbackpacks:global",

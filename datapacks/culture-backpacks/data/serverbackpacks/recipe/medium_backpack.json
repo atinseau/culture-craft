@@ -7,11 +7,11 @@
     "SCS"
   ],
   "key": {
-    "i": { "item": "minecraft:iron_ingot" },
-    "L": { "item": "minecraft:leather" },
-    "S": { "item": "minecraft:string" },
-    "C": { "item": "minecraft:chest" },
-    "0": { "tag": "serverbackpacks:small_backpacks" }
+    "i": "minecraft:iron_ingot",
+    "L": "minecraft:leather",
+    "S": "minecraft:string",
+    "C": "minecraft:chest",
+    "0": "#serverbackpacks:small_backpacks"
   },
   "result": {
     "id": "serverbackpacks:medium",

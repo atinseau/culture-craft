@@ -7,11 +7,11 @@
     "GCG"
   ],
   "key": {
-    "b": { "item": "minecraft:blaze_rod" },
-    "L": { "item": "minecraft:leather" },
-    "G": { "item": "minecraft:gold_ingot" },
-    "C": { "item": "minecraft:chest" },
-    "0": { "tag": "serverbackpacks:medium_backpacks" }
+    "b": "minecraft:blaze_rod",
+    "L": "minecraft:leather",
+    "G": "minecraft:gold_ingot",
+    "C": "minecraft:chest",
+    "0": "#serverbackpacks:medium_backpacks"
   },
   "result": {
     "id": "serverbackpacks:large",
