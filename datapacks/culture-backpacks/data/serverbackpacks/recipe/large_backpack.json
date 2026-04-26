@@ -1,0 +1,20 @@
+{
+  "type": "serverbackpacks:backpack_crafting",
+  "category": "transportation",
+  "pattern": [
+    "bLb",
+    "L0L",
+    "GCG"
+  ],
+  "key": {
+    "b": { "item": "minecraft:blaze_rod" },
+    "L": { "item": "minecraft:leather" },
+    "G": { "item": "minecraft:gold_ingot" },
+    "C": { "item": "minecraft:chest" },
+    "0": { "tag": "serverbackpacks:medium_backpacks" }
+  },
+  "result": {
+    "id": "serverbackpacks:large",
+    "count": 1
+  }
+}

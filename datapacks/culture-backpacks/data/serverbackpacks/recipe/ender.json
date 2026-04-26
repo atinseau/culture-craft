@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    "OEO",
+    " N "
+  ],
+  "key": {
+    "S": { "item": "minecraft:string" },
+    "O": { "item": "minecraft:obsidian" },
+    "N": { "item": "minecraft:ender_eye" },
+    "E": { "tag": "serverbackpacks:large_backpacks" }
+  },
+  "result": {
+    "id": "serverbackpacks:ender",
+    "count": 1
+  }
+}
